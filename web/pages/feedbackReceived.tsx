@@ -4,11 +4,11 @@ import Login from '../components/Login';
 import Main from '../components/Main';
 import { UserContext } from './_app';
 
-const StyledShareFeedback = styled.div``;
+const StyledFeedbackReceived = styled.div``;
 
-function ShareFeedback() {
+function FeedbackReceived() {
   const user = useContext(UserContext);
-  return <StyledShareFeedback>{user ? <Main /> : <Login />}</StyledShareFeedback>;
+  return <StyledFeedbackReceived>{user ? <Main /> : <Login />}</StyledFeedbackReceived>;
 }
 
-export default ShareFeedback;
+export default FeedbackReceived;

@@ -1,23 +1,17 @@
-import * as fbAdmin from 'firebase-admin';
 import { Context } from '../apolloServer';
-import { UserGQL } from '../schema';
+import { UserDB } from '../schema';
+import { usersCollRef, auth } from '../firebase';
 
 export default {
   async current_user(parent: any, args: any, ctx: Context, info: any) {
     if (ctx.user) {
-      const userDocSnapshot = await fbAdmin
-        .firestore()
-        .collection('users')
-        .doc(ctx.user.uid)
-        .get();
-      const user = userDocSnapshot.data() as Partial<UserGQL>;
-      user.id = userDocSnapshot.id;
-      return user;
+      const authUserRecord = await auth.getUser(ctx.user.uid);
+      const userDB = await usersCollRef.doc(ctx.user.uid).get();
+      return {
+        ...authUserRecord,
+        ...(userDB.data() as UserDB),
+      };
     }
     return ctx.user;
   },
 };
-
-// function authorize(ctx: Context) {
-//   if (!ctx.user) ctx.res.status(401).send('UNAUTHORIZED REQUEST');
-// }

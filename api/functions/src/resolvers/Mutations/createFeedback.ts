@@ -2,8 +2,8 @@ import { Context } from '../../apolloServer';
 import { authorize } from './auth';
 import { firestore, feedbacksCollRef } from '../../firebase';
 import { auth } from 'firebase-admin';
-import { QuestionResponsesDB, QuestionResponseDB, FeedbackDB } from '../../schema';
-import { ApolloError } from 'apollo-server-core';
+import { QuestionResponsesDB, QuestionResponseDB } from '../../schema';
+import { ApolloError } from 'apollo-server-express';
 
 interface ResponseInput {
   question_id: string;

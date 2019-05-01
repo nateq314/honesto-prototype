@@ -8,7 +8,7 @@ import {
   createUserSessionToken,
   verifyUserSessionToken,
 } from '../../firebase';
-import { UserGQL, UserDB, CombinedUserDB } from '../../schema';
+import { UserGQL, UserDB } from '../../schema';
 
 interface ILogin {
   idToken?: string;
@@ -111,9 +111,12 @@ async function getGraphQLUserObject(decodedIdToken: fbAdmin.auth.DecodedIdToken)
     .doc(uid)
     .get();
   const dbUserRecord = userDocSnapshot.data() as UserDB;
-  const user: CombinedUserDB = {
+  const user: Partial<UserGQL> = {
     ...authUserRecord,
     ...dbUserRecord,
+    // feedbacks_given and feedbacks_received will be resolved in User resolver
+    feedbacks_given: [],
+    feedbacks_received: [],
   };
   return user;
 }
