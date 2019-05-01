@@ -71,14 +71,14 @@ export async function register(parent: any, args: any, ctx: Context, info: any) 
       .collection('users')
       .doc(userRecord.uid)
       .create({
-        email,
         first_name,
         last_name,
       });
     const customToken = await fbAdmin.auth().createCustomToken(userRecord.uid);
     const app = fbClient.initializeApp({
-      apiKey: 'AIzaSyCsMTAxjQ15ylh3ORj8SF_k658fqDO0q3g',
-      authDomain: 'focus-champion-231019.firebaseapp.com',
+      apiKey: 'AIzaSyClWiJHlH9_EjnlG-l7281daXGitONbUo4',
+      authDomain: 'theorem-prototype.firebaseapp.com',
+      projectId: 'theorem-prototype',
     });
     const userCredential = await app.auth().signInWithCustomToken(customToken);
     if (userCredential.user) {
