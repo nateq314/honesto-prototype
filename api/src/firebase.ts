@@ -73,7 +73,7 @@ async function verifyIdToken(idToken: string) {
 }
 
 export const firestore = admin.firestore();
-export const listsCollRef = firestore.collection('lists');
+export const questionsCollRef = firestore.collection('questions');
 export const usersCollRef = firestore.collection('users');
 export const auth = admin.auth();
 export { createUserSessionToken, verifyIdToken, verifyUserSessionToken };

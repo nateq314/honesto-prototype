@@ -4,7 +4,6 @@ import * as express from 'express';
 import { Context } from '../../apolloServer';
 import {
   firestore,
-  listsCollRef,
   verifyIdToken,
   createUserSessionToken,
   verifyUserSessionToken,
@@ -67,12 +66,6 @@ export async function register(parent: any, args: any, ctx: Context, info: any) 
       email,
       password,
     });
-    const pendingListsQuerySnapshot = await listsCollRef
-      .where('pending_members', 'array-contains', email)
-      .get();
-    const list_invitations = pendingListsQuerySnapshot.empty
-      ? []
-      : pendingListsQuerySnapshot.docs.map((doc) => doc.ref);
     // let writeResult: FirebaseFirestore.WriteResult;
     /* writeResult = */ await firestore
       .collection('users')
@@ -81,18 +74,8 @@ export async function register(parent: any, args: any, ctx: Context, info: any) 
         email,
         first_name,
         last_name,
-        list_invitations,
+        feedbacks_given: [],
       });
-    /* writeResult = */ await listsCollRef.doc().create({
-      name: 'MAIN',
-      order: 1,
-      members: [userRecord.uid],
-      member_info: {
-        [userRecord.uid]: {
-          is_admin: true,
-        },
-      },
-    });
     const customToken = await fbAdmin.auth().createCustomToken(userRecord.uid);
     const app = fbClient.initializeApp({
       apiKey: 'AIzaSyCsMTAxjQ15ylh3ORj8SF_k658fqDO0q3g',
