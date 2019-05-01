@@ -1,8 +1,9 @@
 import { Context } from '../../apolloServer';
 import { authorize } from './auth';
-import { firestore, usersCollRef } from '../../firebase';
+import { firestore, feedbacksCollRef } from '../../firebase';
 import { auth } from 'firebase-admin';
-import { FeedbacksGivenDB, UserDB, QuestionResponsesDB, QuestionResponseDB } from '../../schema';
+import { QuestionResponsesDB, QuestionResponseDB, FeedbackDB } from '../../schema';
+import { ApolloError } from 'apollo-server-core';
 
 interface ResponseInput {
   question_id: string;
@@ -28,35 +29,35 @@ export default async function createFeedback(
 
   try {
     await firestore.runTransaction(async (tx) => {
-      const currentUserDocRef = usersCollRef.doc(current_uid);
-      const userData = (await tx.get(currentUserDocRef)).data() as UserDB;
-      tx.set(
-        usersCollRef.doc(current_uid),
-        {
-          feedbacks_given: {
-            ...userData.feedbacks_given,
-            [for_user]: {
-              ...userData.feedbacks_given[for_user],
-              ...responses.reduce(
-                (allResponses, currResponse) => {
-                  let questionResponse: QuestionResponseDB = {};
-                  const { multi, numerical, text } = currResponse;
-
-                  if (multi) questionResponse.multi = multi;
-                  else if (numerical) questionResponse.numerical = numerical;
-                  else if (text) questionResponse.text = text;
-
-                  allResponses[currResponse.question_id] = questionResponse;
-
-                  return allResponses;
-                },
-                {} as QuestionResponsesDB,
-              ),
-            },
-          } as FeedbacksGivenDB,
-        },
-        { merge: true },
+      const feedbackQuerySnapshot = await tx.get(
+        feedbacksCollRef.where('given_by', '==', current_uid).where('for_user', '==', for_user),
       );
+      if (!feedbackQuerySnapshot.empty)
+        throw new ApolloError(
+          'Feedback for the requested user, by the current user, already exists. ' +
+            'To update user feedback, call the updateFeedback mutation instead.',
+        );
+
+      const feedbackDocRef = feedbacksCollRef.doc();
+      tx.create(feedbackDocRef, {
+        given_by: current_uid,
+        for_user,
+        responses: responses.reduce(
+          (allResponses, currResponse) => {
+            let questionResponse: QuestionResponseDB = {};
+            const { multi, numerical, text } = currResponse;
+
+            if (multi) questionResponse.multi = multi;
+            else if (numerical) questionResponse.numerical = numerical;
+            else if (text) questionResponse.text = text;
+
+            allResponses[currResponse.question_id] = questionResponse;
+
+            return allResponses;
+          },
+          {} as QuestionResponsesDB,
+        ),
+      });
     });
 
     return {

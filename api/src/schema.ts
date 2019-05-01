@@ -1,20 +1,27 @@
 import { gql } from 'apollo-server-express';
 import { auth } from 'firebase-admin';
 
+export interface FeedbackDB {
+  for_user: string;
+  given_by: string;
+  responses: QuestionResponsesDB;
+}
+
 export interface FeedbackGQL {
+  id?: string;
   for_user?: UserGQL;
   given_by?: UserGQL;
   responses?: QuestionResponseGQL[];
 }
 
-// interface QuestionDB {
-//   text: string;
-//   type: number;
-//   order: number;
-//   choices?: string[];
-// }
+export interface QuestionDB {
+  text: string;
+  type: number;
+  order: number;
+  choices?: string[];
+}
 
-interface QuestionGQL {
+export interface QuestionGQL {
   id?: string;
   text?: string;
   type?: number;
@@ -29,24 +36,20 @@ export interface QuestionResponseDB {
 }
 
 export interface QuestionResponsesDB {
+  // key is the Question document ID
   [key: string]: QuestionResponseDB;
 }
 
-interface QuestionResponseGQL {
+export interface QuestionResponseGQL {
   question?: QuestionGQL;
   multi?: number;
   numerical?: number;
   text?: string;
 }
 
-export interface FeedbacksGivenDB {
-  [key: string]: QuestionResponsesDB;
-}
-
 export interface UserDB {
   first_name: string;
   last_name: string;
-  feedbacks_given: FeedbacksGivenDB;
 }
 
 export type CombinedUserDB = UserDB & auth.UserRecord;
@@ -55,7 +58,8 @@ export interface UserGQL {
   disabled?: boolean;
   displayName?: string;
   email?: string;
-  feedbacks_given: FeedbackGQL[];
+  feedbacks_given?: FeedbackGQL[];
+  feedbacks_received?: FeedbackGQL[];
   first_name?: string;
   id: string;
   last_name?: string;
@@ -68,6 +72,7 @@ const schema = gql`
   scalar JSON
 
   type Feedback {
+    id: String!
     given_by: User!
     for_user: User!
     responses: [QuestionResponse!]!
@@ -129,6 +134,7 @@ const schema = gql`
     phoneNumber: String
     photoURL: String
     feedbacks_given: [Feedback!]!
+    feedbacks_received: [Feedback!]!
   }
 
   type UserMutationEvent {

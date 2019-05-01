@@ -74,7 +74,6 @@ export async function register(parent: any, args: any, ctx: Context, info: any) 
         email,
         first_name,
         last_name,
-        feedbacks_given: [],
       });
     const customToken = await fbAdmin.auth().createCustomToken(userRecord.uid);
     const app = fbClient.initializeApp({
