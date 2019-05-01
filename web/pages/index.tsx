@@ -1,14 +1,14 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import Login from '../components/Login';
-import Main from '../components/Main';
+import ShareFeedback from '../components/ShareFeedback';
 import { UserContext } from './_app';
 
-const StyledShareFeedback = styled.div``;
+const StyledHome = styled.div``;
 
-function ShareFeedback() {
+function Home() {
   const user = useContext(UserContext);
-  return <StyledShareFeedback>{user ? <Main /> : <Login />}</StyledShareFeedback>;
+  return <StyledHome>{user ? <ShareFeedback /> : <Login />}</StyledHome>;
 }
 
-export default ShareFeedback;
+export default Home;

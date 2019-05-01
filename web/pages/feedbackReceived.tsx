@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import Login from '../components/Login';
-import Main from '../components/Main';
+import Main from '../components/ShareFeedback';
 import { UserContext } from './_app';
 
 const StyledFeedbackReceived = styled.div``;

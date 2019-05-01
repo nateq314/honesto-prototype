@@ -6,18 +6,43 @@ import GlobalStyles from '../components/GlobalStyles';
 import { FETCH_CURRENT_USER } from '../other/queries';
 import withApolloClient from '../other/with-apollo-client';
 
+interface Question {
+  id?: string;
+  text?: string;
+  type?: number;
+  order?: number;
+  choices?: string[];
+}
+
+interface QuestionResponse {
+  question?: Question;
+  multi?: number;
+  numerical?: number;
+  text?: string;
+}
+
+interface Feedback {
+  id?: string;
+  for_user?: User;
+  given_by?: User;
+  responses?: QuestionResponse;
+}
+
 export interface User {
   email: string;
   first_name: string;
   id: string;
   last_name: string;
+  photoURL: string;
+  feedbacks_given?: Feedback[];
+  feedbacks_received?: Feedback[];
   // actually a lot more than this but for now this is all we want to deal with
 }
 
 interface CurrentUserData {
   data?: {
-    current_user: User
-  }
+    current_user: User;
+  };
 }
 
 interface MyAppProps extends AppProps {

@@ -92,6 +92,7 @@ const schema = gql`
 
   type Query {
     current_user: User
+    users: [User!]!
   }
 
   type Result {
