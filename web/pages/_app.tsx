@@ -6,26 +6,26 @@ import GlobalStyles from '../components/GlobalStyles';
 import { FETCH_CURRENT_USER } from '../other/queries';
 import withApolloClient from '../other/with-apollo-client';
 
-interface Question {
-  id?: string;
-  text?: string;
-  type?: number;
-  order?: number;
+export interface Question {
+  id: string;
+  text: string;
+  type: number;
+  order: number;
   choices?: string[];
 }
 
-interface QuestionResponse {
-  question?: Question;
+export interface QuestionResponse {
+  question: Question;
   multi?: number;
   numerical?: number;
   text?: string;
 }
 
-interface Feedback {
+export interface Feedback {
   id?: string;
-  for_user?: User;
-  given_by?: User;
-  responses?: QuestionResponse;
+  for_user: User;
+  given_by: User;
+  responses: QuestionResponse[];
 }
 
 export interface User {
@@ -34,8 +34,8 @@ export interface User {
   id: string;
   last_name: string;
   photoURL: string;
-  feedbacks_given?: Feedback[];
-  feedbacks_received?: Feedback[];
+  feedbacks_given: Feedback[];
+  feedbacks_received: Feedback[];
   // actually a lot more than this but for now this is all we want to deal with
 }
 

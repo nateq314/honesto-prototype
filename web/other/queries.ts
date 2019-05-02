@@ -1,5 +1,28 @@
 import { gql } from 'apollo-boost';
 
+export const FETCH_QUESTIONS = gql`
+  query {
+    questions {
+      id
+      text
+      order
+      choices
+      type
+    }
+  }
+`;
+
+export const FETCH_USER = gql`
+  query GetUser($id: ID!) {
+    user(id: $id) {
+      id
+      email
+      first_name
+      last_name
+    }
+  }
+`;
+
 export const FETCH_USERS = gql`
   query {
     users {

@@ -15,6 +15,8 @@ export default {
     return {
       ...authUserRecord,
       ...dbUserRecord,
+      feedbacks_given: [],
+      feedbacks_received: [],
     } as CombinedUserDB;
   },
 
@@ -24,6 +26,8 @@ export default {
     return {
       ...authUserRecord,
       ...dbUserRecord,
+      feedbacks_given: [],
+      feedbacks_received: [],
     } as CombinedUserDB;
   },
 

@@ -5,7 +5,7 @@ import { auth } from 'firebase-admin';
 import { QuestionResponsesDB, QuestionResponseDB } from '../../schema';
 import { ApolloError } from 'apollo-server-express';
 
-interface ResponseInput {
+export interface ResponseInput {
   question_id: string;
   multi?: number;
   numerical?: number;

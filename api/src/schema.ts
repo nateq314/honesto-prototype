@@ -85,6 +85,7 @@ const schema = gql`
 
   type Mutation {
     createFeedback(for_user: Int!, responses: [ResponseInput!]!): Result!
+    updateFeedback(for_user: Int!, response: ResponseInput!): Result!
     login(idToken: String, session: String): LoginResult!
     logout: LoginResult!
     register(email: String!, password: String!, first_name: String!, last_name: String!): Result!
@@ -92,16 +93,9 @@ const schema = gql`
 
   type Query {
     current_user: User
+    questions: [Question!]!
     users: [User!]!
-  }
-
-  type Result {
-    success: Boolean!
-    message: String
-  }
-
-  type Subscription {
-    userEvents: UserMutationEvent!
+    user(id: ID!): User
   }
 
   type Question {
@@ -109,6 +103,7 @@ const schema = gql`
     text: String!
     order: Int!
     choices: [String]
+    type: Int!
   }
 
   type QuestionResponse {
@@ -123,6 +118,15 @@ const schema = gql`
     multi: Int
     numerical: Int
     text: String
+  }
+
+  type Result {
+    success: Boolean!
+    message: String
+  }
+
+  type Subscription {
+    userEvents: UserMutationEvent!
   }
 
   type User {

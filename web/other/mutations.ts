@@ -21,3 +21,12 @@ export const REGISTER = gql`
     }
   }
 `;
+
+export const UPDATE_FEEDBACK = gql`
+  mutation UpdateFeedback($for_user: String!, $response: ResponseInput!) {
+    updateFeedback(for_user: $for_user, response: $response) {
+      success
+      message
+    }
+  }
+`;

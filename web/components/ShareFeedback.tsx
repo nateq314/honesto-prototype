@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import AppBar from './AppBar';
 import { FETCH_USERS } from '../other/queries';
 import { User } from '../pages/_app';
+import Button from './Button';
 
 const StyledShareFeedback = styled.div`
   height: 100vh;
@@ -26,6 +27,7 @@ function UserFeedbackItem({ user }: UserFeedbackItemProps) {
       <span className="user_name">
         {user.first_name} {user.last_name}
       </span>
+      <Button>{user.feedbacks_received.length > 0 ? 'View Submission' : 'Fill Out'}</Button>
     </li>
   );
 }
@@ -36,23 +38,19 @@ export default function ShareFeedback() {
       {({ loading, error, data }: QueryResult<FetchUsersQueryResult>) => {
         if (loading) return 'Loading...';
         if (error) return `Error! ${error.message}`;
-        // Probably don't have to do this check (if (data))
-        // but what the hell, it's inexpensive and safe.
-        if (data) {
-          const { users } = data;
-          if (users) {
-            return (
-              <StyledShareFeedback>
-                <AppBar />
-                <h1>Share Feedback</h1>
-                <ul>
-                  {users.map((user) => (
-                    <UserFeedbackItem key={user.id} user={user} />
-                  ))}
-                </ul>
-              </StyledShareFeedback>
-            );
-          }
+        const { users } = data as FetchUsersQueryResult;
+        if (users) {
+          return (
+            <StyledShareFeedback>
+              <AppBar />
+              <h1>Share Feedback</h1>
+              <ul>
+                {users.map((user) => (
+                  <UserFeedbackItem key={user.id} user={user} />
+                ))}
+              </ul>
+            </StyledShareFeedback>
+          );
         }
       }}
     </Query>
