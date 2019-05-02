@@ -103,19 +103,16 @@ function Login() {
                       (password.current as HTMLInputElement).value,
                     );
                     const result = await user.reauthenticateWithCredential(credential);
-                    console.log('re-authentication result:', result);
                     idToken = await user.getIdToken();
                     response = await login({
                       variables: { idToken },
                     });
                   }
                   if (response) {
-                    console.log('response:', response);
                     const { error } = response.data.login as LoginResponse;
                     if (error) {
                       console.error(error);
                     } else {
-                      const { user } = response as any;
                       // Then we know the API cookie has been set.
                       // Set a temporary cookie (expires in 1 sec), just enough for sth to be received by the server
                       // and used for login.

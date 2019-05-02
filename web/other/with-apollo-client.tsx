@@ -1,16 +1,16 @@
-import React from "react";
-import initApollo from "./init-apollo";
-import { NextAppContext } from "next/app";
-import { NextContext } from "next";
-import Head from "next/head";
-import { getDataFromTree } from "react-apollo";
-import { ApolloClient, NormalizedCacheObject } from "apollo-boost";
-import { parseCookies, setCookie, destroyCookie } from "nookies";
-import * as api from "./api";
-import { LOGIN } from "../components/Login";
-import * as http from "http";
-import { FETCH_CURRENT_USER } from "./queries";
-import { User } from "../pages/_app";
+import React from 'react';
+import initApollo from './init-apollo';
+import { NextAppContext } from 'next/app';
+import { NextContext } from 'next';
+import Head from 'next/head';
+import { getDataFromTree } from 'react-apollo';
+import { ApolloClient, NormalizedCacheObject } from 'apollo-boost';
+import { parseCookies, setCookie, destroyCookie } from 'nookies';
+import * as api from './api';
+import { LOGIN } from '../components/Login';
+import * as http from 'http';
+import { FETCH_CURRENT_USER } from './queries';
+import { User } from '../pages/_app';
 
 interface ApolloProps {
   apolloState: NormalizedCacheObject;
@@ -24,14 +24,14 @@ async function autoLogin(ctx: NextContext) {
   if (tempToken) {
     // User just logged in via email/password and page reloaded. Temporary token received.
     // TODO: try to reproduce this. If unable to, remove.
-    if (tempToken === "undefined") {
-      destroyCookie(ctx, "tempToken", {});
+    if (tempToken === 'undefined') {
+      destroyCookie(ctx, 'tempToken', {});
       return {};
     }
     // fetch user data from API using the idToken (`login` mutation)
     const response = await api.post({
-      query: LOGIN.replace(/\s+/, " "),
-      variables: { idToken: tempToken }
+      query: LOGIN.replace(/\s+/, ' '),
+      variables: { idToken: tempToken },
     });
     const { session } = response;
     const { error, user } = response.data.login;
@@ -42,11 +42,11 @@ async function autoLogin(ctx: NextContext) {
     // Set an httpOnly cookie. From now on (at least while the cookie is valid) this will
     // be sent by the client on all requests for pages. Using this cookie, we can perform
     // auto-login per below.
-    setCookie(ctx, "session", session, {
+    setCookie(ctx, 'session', session, {
       maxAge: 14 * 24 * 60 * 60,
       httpOnly: true,
       // TODO: set 'secure' to true
-      secure: false
+      secure: false,
     });
     // return user data as props
     return { user, session };
@@ -54,14 +54,16 @@ async function autoLogin(ctx: NextContext) {
     // User is re-visiting the site. Get the user info. No need to set cookie as it already exists.
     // fetch user data from API using the session (`login` mutation)
     try {
-      const response = await api.post({
-        query: LOGIN.replace(/\s+/, " "),
-        variables: { session }
-      });
+      const response = await api.post(
+        {
+          query: LOGIN.replace(/\s+/, ' '),
+        },
+        { session },
+      );
       const { user, error } = response.data.login;
       if (error) {
         console.error(error);
-        destroyCookie(ctx, "session", {});
+        destroyCookie(ctx, 'session', {});
         return {};
       } else return { user, session };
     } catch (error) {
@@ -76,7 +78,7 @@ export default (App: any) => {
   return class Apollo extends React.Component<ApolloProps> {
     private apolloClient: ApolloClient<NormalizedCacheObject>;
 
-    static displayName = "withApollo(App)";
+    static displayName = 'withApollo(App)';
 
     static async getInitialProps(appCtx: NextAppContext) {
       const { Component, router, ctx } = appCtx;
@@ -89,18 +91,17 @@ export default (App: any) => {
       // and extract the resulting data
       let apollo: ApolloClient<NormalizedCacheObject> | undefined;
       let user: User | undefined;
-      if (typeof window === "undefined") {
+      if (typeof window === 'undefined') {
         // SERVER SIDE
-        if (ctx.query.logout === "true") {
+        if (ctx.query.logout === 'true') {
           // logout. Instead of sending an invalid idToken to the backend
           // only to have it return an error, just remove the cookie now
           // and forego the whole 'attempt to auto-login' process.
-          destroyCookie(ctx, "session", {});
-          const response = (ctx as NextContext<
-            Record<string, string | string[] | undefined>
-          >).res as http.ServerResponse;
+          destroyCookie(ctx, 'session', {});
+          const response = (ctx as NextContext<Record<string, string | string[] | undefined>>)
+            .res as http.ServerResponse;
           response.writeHead(302, {
-            Location: ctx.pathname
+            Location: ctx.pathname,
           });
           response.end();
         } else {
@@ -116,25 +117,20 @@ export default (App: any) => {
                 current_user: user
                   ? {
                       ...user,
-                      __typename: "User"
+                      __typename: 'User',
                     }
-                  : null
-              }
+                  : null,
+              },
             });
             // Run all GraphQL queries
             await getDataFromTree(
-              <App
-                {...appProps}
-                Component={Component}
-                router={router}
-                apolloClient={apollo}
-              />
+              <App {...appProps} Component={Component} router={router} apolloClient={apollo} />,
             );
           } catch (error) {
             // Prevent Apollo Client GraphQL errors from crashing SSR.
             // Handle them in components via the data.error prop:
             // https://www.apollographql.com/docs/react/api/react-apollo.html#graphql-query-data-error
-            console.error("Error while running `getDataFromTree`", error);
+            console.error('Error while running `getDataFromTree`', error);
           }
 
           // getDataFromTree does not call componentWillUnmount
@@ -152,18 +148,16 @@ export default (App: any) => {
 
       return {
         ...appProps,
-        apolloState
+        apolloState,
       };
     }
 
     constructor(props: ApolloProps) {
       super(props);
-      const currentUser =
-        props.apolloState.ROOT_QUERY &&
-        props.apolloState.ROOT_QUERY.current_user;
-      let currentUserUID = "";
+      const currentUser = props.apolloState.ROOT_QUERY && props.apolloState.ROOT_QUERY.current_user;
+      let currentUserUID = '';
       if (currentUser) {
-        currentUserUID = (currentUser as { id: string }).id.split(":")[1];
+        currentUserUID = (currentUser as { id: string }).id.split(':')[1];
       }
       this.apolloClient = initApollo(props.apolloState, {}, { currentUserUID });
     }

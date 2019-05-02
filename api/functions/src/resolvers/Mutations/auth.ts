@@ -16,7 +16,6 @@ interface ILogin {
 }
 
 export async function login(parent: any, args: ILogin, ctx: Context, info: any) {
-  console.log('RESOLVER login()');
   try {
     let decodedIdToken: fbAdmin.auth.DecodedIdToken;
     let user: Partial<UserGQL>;
@@ -26,6 +25,7 @@ export async function login(parent: any, args: ILogin, ctx: Context, info: any) 
       // 2: SSR backend is calling this in order to fetch the user object
       //    and set the session cookie, SSR <-> CLIENT
       decodedIdToken = await verifyIdToken(args.idToken);
+      ctx.user = decodedIdToken;
       const [sessionCookie, expiresIn] = await createUserSessionToken(args, decodedIdToken);
       const options: express.CookieOptions = {
         maxAge: expiresIn,
@@ -36,7 +36,7 @@ export async function login(parent: any, args: ILogin, ctx: Context, info: any) 
     } else {
       // User is re-visiting the site and automatically reauthenticating using the
       // existing session cookie (SSR <-> CLIENT).
-      const sessionCookie = args.session || '';
+      const sessionCookie = ctx.req.get('session') || '';
       decodedIdToken = await verifyUserSessionToken(sessionCookie);
     }
     user = await getGraphQLUserObject(decodedIdToken);
@@ -50,7 +50,6 @@ export async function login(parent: any, args: ILogin, ctx: Context, info: any) 
 }
 
 export async function logout(parent: any, args: any, ctx: Context, info: any) {
-  console.log('RESOLVER logout()');
   const sessionCookie = ctx.req.cookies.session || '';
   if (sessionCookie) ctx.res.clearCookie('session');
   return {
@@ -59,7 +58,6 @@ export async function logout(parent: any, args: any, ctx: Context, info: any) {
 }
 
 export async function register(parent: any, args: any, ctx: Context, info: any) {
-  console.log('RESOLVER register()');
   try {
     const { email, password, first_name, last_name } = args;
     const userRecord = await fbAdmin.auth().createUser({

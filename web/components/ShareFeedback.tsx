@@ -36,6 +36,8 @@ export default function ShareFeedback() {
       {({ loading, error, data }: QueryResult<FetchUsersQueryResult>) => {
         if (loading) return 'Loading...';
         if (error) return `Error! ${error.message}`;
+        // Probably don't have to do this check (if (data))
+        // but what the hell, it's inexpensive and safe.
         if (data) {
           const { users } = data;
           if (users) {

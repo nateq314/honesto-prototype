@@ -17,6 +17,7 @@ export default {
   },
 
   async users(parent: any, args: any, ctx: Context, info: any) {
+    console.log('RESOLVER: users()', 'ctx.user:', ctx.user);
     authorize(ctx);
     const usersQuerySnapshot = await usersCollRef.get();
     const users = await Promise.all(

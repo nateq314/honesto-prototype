@@ -5,7 +5,6 @@ import { auth } from 'firebase-admin';
 
 export default {
   id: ({ uid }: CombinedUserDB) => {
-    console.log('RESOLVER User.id');
     return uid;
   },
 
