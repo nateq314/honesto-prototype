@@ -42,7 +42,7 @@ export default function ShareFeedback({ feedbackComplete }: ShareFeedbackProps) 
         if (users) {
           return (
             <StyledShareFeedback>
-              <AppBar />
+              <AppBar active="share" />
               <div className="main-content">
                 <div className="heading">
                   {feedbackComplete ? (

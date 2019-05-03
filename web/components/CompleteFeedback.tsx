@@ -102,7 +102,7 @@ export default function CompleteFeedback({ responses, forUser }: CompleteFeedbac
             {(setFeedback: MutationFn) => {
               return (
                 <StyledCompleteFeedback>
-                  <AppBar />
+                  <AppBar active="share" />
                   <div className="main-content">
                     <QuestionResponseInputter
                       forUser={forUser}
