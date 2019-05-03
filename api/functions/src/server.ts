@@ -1,19 +1,19 @@
-import * as cors from "cors";
-import * as express from "express";
-import * as cookieParser from "cookie-parser";
-import apolloServer from "./apolloServer";
+import * as cors from 'cors';
+import * as express from 'express';
+import * as cookieParser from 'cookie-parser';
+import apolloServer from './apolloServer';
 
 function configureServer() {
   const app = express();
   app.use(
     cors({
       origin: [
-        "https://nateq314.now.sh",
-        "http://localhost:3000",
-        "http://localhost:4000"
+        'https://theorem-prototype.now.sh',
+        'http://localhost:3000',
+        'http://localhost:4000',
       ],
-      credentials: true
-    })
+      credentials: true,
+    }),
   );
   app.use(cookieParser());
 
@@ -21,7 +21,7 @@ function configureServer() {
   // previously configured Express application
   apolloServer.applyMiddleware({
     app,
-    cors: false
+    cors: false,
   });
 
   // return the application

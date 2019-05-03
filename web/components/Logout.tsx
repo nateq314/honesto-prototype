@@ -9,9 +9,9 @@ const StyledLogout = styled.span`
   position: absolute;
   right: 0px;
   top: 0px;
-  margin-right: 10px;
+  margin-right: 20px;
   height: 80px;
-  border-left: 1px solid #999;
+  border-left: 1px solid #b0b0b0;
 
   img {
     height: 58px;

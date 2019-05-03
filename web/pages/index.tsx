@@ -26,7 +26,7 @@ Home.getInitialProps = async ({ req, res, query }: NextContext) => {
   if (query.feedbackComplete) {
     if (res) {
       res.writeHead(302, {
-        Location: 'http://localhost:4000/',
+        Location: 'https://theorem-prototype.now.sh/',
       });
       res.end();
     } else {

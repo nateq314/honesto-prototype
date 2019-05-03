@@ -52,7 +52,7 @@ GiveFeedbackPage.getInitialProps = async ({ req, res, query }: NextContext) => {
   }
   if (res) {
     res.writeHead(302, {
-      Location: '/',
+      Location: 'https://theorem-prototype.now.sh/',
     });
     res.end();
   } else {
