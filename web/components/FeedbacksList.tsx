@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { User } from '../pages/_app';
+import { User, UserContext } from '../pages/_app';
 import UserFeedbackListItem from './UserFeedbackListItem';
 import { Query, QueryResult } from 'react-apollo';
 import { FETCH_QUESTIONS } from '../other/queries';
@@ -18,6 +18,7 @@ interface FeedbacksListProps {
 }
 
 export default function FeedbacksList({ users }: FeedbacksListProps) {
+  const current_user = useContext(UserContext) as User;
   return (
     <Query query={FETCH_QUESTIONS}>
       {({ error, loading, data }: QueryResult<FetchQuestionsQueryResult>) => {
@@ -27,9 +28,15 @@ export default function FeedbacksList({ users }: FeedbacksListProps) {
           const { questions } = data;
           return (
             <StyledFeedbacksList>
-              {users.map((user) => (
-                <UserFeedbackListItem key={user.id} user={user} questionsCount={questions.length} />
-              ))}
+              {users
+                .filter((user) => user.id !== current_user.id)
+                .map((user) => (
+                  <UserFeedbackListItem
+                    key={user.id}
+                    user={user}
+                    questionsCount={questions.length}
+                  />
+                ))}
             </StyledFeedbacksList>
           );
         }
