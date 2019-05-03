@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { User, UserContext } from '../pages/_app';
@@ -57,17 +56,15 @@ export default function UserFeedbackListItem({ questionsCount, user }: UserFeedb
       <span className="user-name">
         {user.first_name} {user.last_name}
       </span>
-      <Link href={`/give-feedback?uid=${user.id}`}>
-        <a>
-          <Button
-            className={
-              responsesCount < questionsCount ? (responsesCount === 0 ? 'honesto' : 'seagreen') : ''
-            }
-          >
-            {buttonText}
-          </Button>
-        </a>
-      </Link>
+      <a href={`/give-feedback?uid=${user.id}`}>
+        <Button
+          className={
+            responsesCount < questionsCount ? (responsesCount === 0 ? 'honesto' : 'seagreen') : ''
+          }
+        >
+          {buttonText}
+        </Button>
+      </a>
     </StyledFeedbacksList>
   );
 }
