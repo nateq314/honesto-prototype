@@ -50,6 +50,7 @@ export interface QuestionResponseGQL {
 export interface UserDB {
   first_name: string;
   last_name: string;
+  avatar_url: string;
 }
 
 export type CombinedUserDB = UserDB & auth.UserRecord;
@@ -84,8 +85,7 @@ const schema = gql`
   }
 
   type Mutation {
-    createFeedback(for_user: Int!, responses: [ResponseInput!]!): Result!
-    updateFeedback(for_user: Int!, response: ResponseInput!): Result!
+    setFeedback(for_user: String!, response: ResponseInput!): Feedback!
     login(idToken: String, session: String): LoginResult!
     logout: LoginResult!
     register(email: String!, password: String!, first_name: String!, last_name: String!): Result!
@@ -130,6 +130,7 @@ const schema = gql`
   }
 
   type User {
+    avatar_url: String!
     id: ID!
     disabled: Boolean!
     displayName: String

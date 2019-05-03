@@ -22,11 +22,35 @@ export const REGISTER = gql`
   }
 `;
 
-export const UPDATE_FEEDBACK = gql`
-  mutation UpdateFeedback($for_user: String!, $response: ResponseInput!) {
-    updateFeedback(for_user: $for_user, response: $response) {
-      success
-      message
+export const SET_FEEDBACK = gql`
+  mutation SetFeedback($for_user: String!, $response: ResponseInput!) {
+    setFeedback(for_user: $for_user, response: $response) {
+      id
+      for_user {
+        avatar_url
+        id
+        email
+        first_name
+        last_name
+      }
+      given_by {
+        avatar_url
+        id
+        email
+        first_name
+        last_name
+      }
+      responses {
+        question {
+          id
+          text
+          order
+          choices
+        }
+        multi
+        numerical
+        text
+      }
     }
   }
 `;

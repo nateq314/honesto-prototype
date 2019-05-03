@@ -4,35 +4,34 @@ import styled from 'styled-components';
 import AppBar from './AppBar';
 import { FETCH_USERS } from '../other/queries';
 import { User } from '../pages/_app';
-import Button from './Button';
+import FeedbacksList from './FeedbacksList';
 
 const StyledShareFeedback = styled.div`
   height: 100vh;
   display: grid;
   grid-template-rows: 70px auto;
   grid-template-areas: 'appbar' 'app_content';
+
+  .main-content {
+    width: 800px;
+    margin: 0px auto;
+  }
+
+  .heading {
+    margin-top: 50px;
+    text-align: left;
+  }
 `;
 
 interface FetchUsersQueryResult {
   users: User[];
 }
 
-interface UserFeedbackItemProps {
-  user: User;
+interface ShareFeedbackProps {
+  feedbackComplete?: boolean;
 }
 
-function UserFeedbackItem({ user }: UserFeedbackItemProps) {
-  return (
-    <li>
-      <span className="user_name">
-        {user.first_name} {user.last_name}
-      </span>
-      <Button>{user.feedbacks_received.length > 0 ? 'View Submission' : 'Fill Out'}</Button>
-    </li>
-  );
-}
-
-export default function ShareFeedback() {
+export default function ShareFeedback({ feedbackComplete }: ShareFeedbackProps) {
   return (
     <Query query={FETCH_USERS}>
       {({ loading, error, data }: QueryResult<FetchUsersQueryResult>) => {
@@ -43,12 +42,21 @@ export default function ShareFeedback() {
           return (
             <StyledShareFeedback>
               <AppBar />
-              <h1>Share Feedback</h1>
-              <ul>
-                {users.map((user) => (
-                  <UserFeedbackItem key={user.id} user={user} />
-                ))}
-              </ul>
+              <div className="main-content">
+                <div className="heading">
+                  {feedbackComplete ? (
+                    <>
+                      <h1>Thank you for sharing your feedback!</h1>
+                      <div className="subheading">
+                        Continue to give feedback to other team members.
+                      </div>
+                    </>
+                  ) : (
+                    <h1>Share Feedback</h1>
+                  )}
+                </div>
+                <FeedbacksList users={users} />
+              </div>
             </StyledShareFeedback>
           );
         }

@@ -17,6 +17,7 @@ export const LOGIN = `
     login(idToken: $idToken, session: $session) {
       error
       user {
+        avatar_url
         id
         email
         first_name
@@ -24,6 +25,7 @@ export const LOGIN = `
         feedbacks_given {
           id
           for_user {
+            avatar_url
             id
             email
             first_name
@@ -44,6 +46,7 @@ export const LOGIN = `
         feedbacks_received {
           id
           given_by {
+            avatar_url
             id
             email
             first_name

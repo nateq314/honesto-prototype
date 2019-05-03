@@ -118,6 +118,38 @@ export default (App: any) => {
                   ? {
                       ...user,
                       __typename: 'User',
+                      feedbacks_given: user.feedbacks_given.map((f) => ({
+                        ...f,
+                        __typename: 'Feedback',
+                        for_user: {
+                          ...f.for_user,
+                          __typename: 'User',
+                        },
+                        responses: f.responses.map((r) => ({
+                          ...r,
+                          __typename: 'QuestionResponse',
+                          question: {
+                            ...r.question,
+                            __typename: 'Question',
+                          },
+                        })),
+                      })),
+                      feedbacks_received: user.feedbacks_received.map((f) => ({
+                        ...f,
+                        __typename: 'Feedback',
+                        for_user: {
+                          ...f.for_user,
+                          __typename: 'User',
+                        },
+                        responses: f.responses.map((r) => ({
+                          ...r,
+                          __typename: 'QuestionResponse',
+                          question: {
+                            ...r.question,
+                            __typename: 'Question',
+                          },
+                        })),
+                      })),
                     }
                   : null,
               },

@@ -14,26 +14,29 @@ export interface Question {
   choices?: string[];
 }
 
-export interface QuestionResponse {
+export interface QResponse {
+  multi: number | null;
+  numerical: number | null;
+  text: string | null;
+}
+
+export interface QuestionAndResponse extends QResponse {
   question: Question;
-  multi?: number;
-  numerical?: number;
-  text?: string;
 }
 
 export interface Feedback {
-  id?: string;
+  id: string;
   for_user: User;
   given_by: User;
-  responses: QuestionResponse[];
+  responses: QuestionAndResponse[];
 }
 
 export interface User {
+  avatar_url: string;
   email: string;
   first_name: string;
   id: string;
   last_name: string;
-  photoURL: string;
   feedbacks_given: Feedback[];
   feedbacks_received: Feedback[];
   // actually a lot more than this but for now this is all we want to deal with

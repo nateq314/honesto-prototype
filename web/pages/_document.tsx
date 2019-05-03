@@ -1,12 +1,5 @@
-import Document, {
-  Head,
-  Main,
-  NextDocumentContext,
-  NextScript
-} from "next/document";
-import { ServerStyleSheet } from "styled-components";
-
-const { resetServerContext } = require("react-beautiful-dnd");
+import Document, { Head, Main, NextDocumentContext, NextScript } from 'next/document';
+import { ServerStyleSheet } from 'styled-components';
 
 interface DocumentProps {
   styleTags: Array<React.ReactElement<{}>>;
@@ -16,10 +9,7 @@ export default class MyDocument extends Document<DocumentProps> {
   public static async getInitialProps({ renderPage }: NextDocumentContext) {
     const sheet = new ServerStyleSheet();
 
-    resetServerContext(); // react-beautiful-dnd
-    const page = renderPage((App) => (props) =>
-      sheet.collectStyles(<App {...props} />)
-    );
+    const page = renderPage((App) => (props) => sheet.collectStyles(<App {...props} />));
 
     const styleTags = sheet.getStyleElement();
 

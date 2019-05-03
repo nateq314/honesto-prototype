@@ -58,6 +58,7 @@ GiveFeedbackPage.getInitialProps = async ({ req, res, query }: NextContext) => {
   } else {
     Router.push('/');
   }
+  return {};
 };
 
 export default GiveFeedbackPage;

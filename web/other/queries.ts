@@ -15,6 +15,7 @@ export const FETCH_QUESTIONS = gql`
 export const FETCH_USER = gql`
   query GetUser($id: ID!) {
     user(id: $id) {
+      avatar_url
       id
       email
       first_name
@@ -26,11 +27,11 @@ export const FETCH_USER = gql`
 export const FETCH_USERS = gql`
   query {
     users {
+      avatar_url
       id
       email
       first_name
       last_name
-      photoURL
       feedbacks_given {
         id
         for_user {
@@ -74,6 +75,7 @@ export const FETCH_USERS = gql`
 export const FETCH_CURRENT_USER = gql`
   query {
     current_user {
+      avatar_url
       id
       email
       first_name
@@ -81,6 +83,7 @@ export const FETCH_CURRENT_USER = gql`
       feedbacks_given {
         id
         for_user {
+          avatar_url
           id
           email
           first_name
@@ -101,6 +104,7 @@ export const FETCH_CURRENT_USER = gql`
       feedbacks_received {
         id
         given_by {
+          avatar_url
           id
           email
           first_name

@@ -9,6 +9,7 @@ export default {
   },
 
   feedbacks_given: async ({ uid }: CombinedUserDB, _args: any, ctx: Context) => {
+    console.log('RESOLVER: feedbacks_given');
     let query: FirebaseFirestore.Query;
     const current_uid = (ctx.user as auth.DecodedIdToken).uid;
     if (uid === current_uid) {
@@ -28,6 +29,7 @@ export default {
         id: docSnapshot.id,
       };
     });
+    console.log('feedbacks_given:', feedbacks_given);
     return feedbacks_given;
   },
 

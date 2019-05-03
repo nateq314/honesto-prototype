@@ -1,10 +1,8 @@
 import { login, logout, register } from './auth';
-import createFeedback from './createFeedback';
-import updateFeedback from './updateFeedback';
+import setFeedback from './setFeedback';
 
 export default {
-  createFeedback,
-  updateFeedback,
+  setFeedback,
   login,
   logout,
   register,
