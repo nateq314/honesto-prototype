@@ -6,13 +6,22 @@ import Logout from './Logout';
 const StyledAppBar = styled.header`
   background-color: #f2f3f4;
   grid-area: appbar;
-  /* position: relative; */
 
   .content {
-    width: 800px;
+    width: 1180px;
     margin: 0px auto;
-    text-align: left;
     padding-top: 0px;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .honesto-logo {
+    font-size: 36px;
+    font-weight: bold;
+    padding: 10px 0px;
+    align-self: flex-start;
+    position: relative;
+    left: -10px;
   }
 
   .navLink {
@@ -20,10 +29,10 @@ const StyledAppBar = styled.header`
     font-size: 18px;
     line-height: 19px;
     font-weight: bold;
-    margin-right: 115px;
     border-bottom: 3px solid transparent;
     padding: 26px 0px 31px 0px;
     display: inline-block;
+    margin: 0px 0px 0px 85px;
 
     &:last-of-type {
       margin-right: 0px;
@@ -44,6 +53,7 @@ export default function AppBar({ active }: AppBarProps) {
   return (
     <StyledAppBar className="AppBar">
       <div className="content">
+        <div className="honesto-logo">Honesto</div>
         <a className={`navLink ${active === 'share' ? 'active' : ''}`} href="/">
           Share Feedback
         </a>
