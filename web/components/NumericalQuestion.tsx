@@ -20,24 +20,24 @@ const StyledNumericalQuestion = styled.div`
     display: inline-block;
     width: 60px;
     height: 60px;
-    border: 3px solid #101010;
+    border: 3px solid #fff;
     transition: 0.2s background-color;
     cursor: pointer;
 
     &.out-of-range {
-      background-color: #222;
+      background-color: #f2f3f4;
     }
 
     &.pending-in-range {
-      background-color: #3e281e;
+      background-color: #d5baed;
     }
 
     &.pending-out-of-range {
-      background-color: #ac420d;
+      background-color: #aa65e2;
     }
 
     &.in-range {
-      background-color: #f50;
+      background-color: #7f0fd7;
     }
   }
 

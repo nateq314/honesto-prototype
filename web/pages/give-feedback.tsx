@@ -52,7 +52,7 @@ GiveFeedbackPage.getInitialProps = async ({ req, res, query }: NextContext) => {
   }
   if (res) {
     res.writeHead(302, {
-      Location: 'http://localhost:4000/',
+      Location: '/',
     });
     res.end();
   } else {

@@ -14,6 +14,10 @@ const GlobalStyles = createGlobalStyle`
   h1 {
     margin-top: 0px;
   }
+
+  a {
+    text-decoration: none;
+  }
 `;
 
 export default GlobalStyles;

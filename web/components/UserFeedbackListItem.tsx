@@ -57,7 +57,13 @@ export default function UserFeedbackListItem({ questionsCount, user }: UserFeedb
         {user.first_name} {user.last_name}
       </span>
       <a href={`/give-feedback?uid=${user.id}`}>
-        <Button className={responsesCount < questionsCount ? 'honesto' : ''}>{buttonText}</Button>
+        <Button
+          className={
+            responsesCount < questionsCount ? (responsesCount === 0 ? 'honesto' : 'seagreen') : ''
+          }
+        >
+          {buttonText}
+        </Button>
       </a>{' '}
     </StyledFeedbacksList>
   );

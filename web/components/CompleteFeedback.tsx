@@ -11,7 +11,7 @@ import AppBar from './AppBar';
 const StyledCompleteFeedback = styled.div`
   height: 100vh;
   display: grid;
-  grid-template-rows: 70px auto;
+  grid-template-rows: 60px auto;
   grid-template-areas: 'appbar' 'app_content';
 
   .main-content {

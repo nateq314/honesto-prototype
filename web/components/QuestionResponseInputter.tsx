@@ -12,6 +12,7 @@ import MultipleChoiceQuestion from './MultipleChoiceQuestion';
 import NumericalQuestion from './NumericalQuestion';
 import FreeAnswerQuestion from './FreeAnswerQuestion';
 import Button from './Button';
+import QuestionResponsesProgress from './QuestionResponsesProgress';
 
 interface QuestionResponseInputterProps {
   forUser: User;
@@ -23,6 +24,16 @@ interface QuestionResponseInputterProps {
 
 const StyledQuestionResponseInputter = styled.div`
   margin-top: 50px;
+
+  .back {
+    color: #59636e;
+    margin-bottom: 20px;
+    text-align: left;
+
+    a:visited {
+      color: #59636e;
+    }
+  }
 
   h1 {
     font-size: 31px;
@@ -41,6 +52,7 @@ const StyledQuestionResponseInputter = styled.div`
 
   .heading {
     position: relative;
+    height: 152px;
   }
 
   img {
@@ -158,6 +170,9 @@ export default function QuestionResponseInputter({
   const subtitle = `SHARE YOUR FEDBACK FOR ${fullname.toUpperCase()}`;
   return (
     <StyledQuestionResponseInputter>
+      <div className="back">
+        <a href="/">{'< '}BACK</a>
+      </div>
       <div className="heading">
         <h1>{currQuestion.text}</h1>
         <div className="subtitle">{subtitle}</div>
@@ -188,11 +203,11 @@ export default function QuestionResponseInputter({
             Next
           </Button>
         </nav>
-        <div className="progress">
-          QUESTIONS COMPLETED
-          <br />
-          {responsesCount} / {questions.length}
-        </div>
+        <QuestionResponsesProgress
+          currentIndex={currentQuestionIdx}
+          responsesCount={responsesCount}
+          questionsCount={questions.length}
+        />
       </div>
     </StyledQuestionResponseInputter>
   );

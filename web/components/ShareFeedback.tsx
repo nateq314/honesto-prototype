@@ -9,7 +9,7 @@ import FeedbacksList from './FeedbacksList';
 const StyledShareFeedback = styled.div`
   height: 100vh;
   display: grid;
-  grid-template-rows: 70px auto;
+  grid-template-rows: 80px auto;
   grid-template-areas: 'appbar' 'app_content';
 
   .main-content {

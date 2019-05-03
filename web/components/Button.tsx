@@ -24,8 +24,17 @@ const Button = styled.button`
     }
   }
 
+  &.seagreen {
+    background-color: #2bbf69;
+    color: #fff;
+
+    &:hover {
+      background-color: #24a058;
+    }
+  }
+
   &[disabled] {
-    color: #777;
+    color: #aaa;
     cursor: default;
 
     &:hover {
