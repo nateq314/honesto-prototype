@@ -21,7 +21,7 @@ const StyledFooter = styled.footer`
 
   svg {
     fill: #fff;
-    height: 24px;
+    height: 20px;
   }
 
   .copyright {
