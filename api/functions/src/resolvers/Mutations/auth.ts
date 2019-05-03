@@ -1,4 +1,5 @@
 import * as fbAdmin from 'firebase-admin';
+import * as functions from 'firebase-functions';
 import * as fbClient from 'firebase';
 import * as express from 'express';
 import { Context } from '../../apolloServer';
@@ -30,7 +31,7 @@ export async function login(parent: any, args: ILogin, ctx: Context, info: any) 
       const options: express.CookieOptions = {
         maxAge: expiresIn,
         httpOnly: true,
-        secure: false, // TODO: set secure: true in production
+        secure: true,
       };
       ctx.res.cookie('session', sessionCookie, options);
     } else {
@@ -71,17 +72,19 @@ export async function register(parent: any, args: any, ctx: Context, info: any) 
       .create({
         first_name,
         last_name,
+        avatar_url:
+          'https://firebasestorage.googleapis.com/v0/b/theorem-prototype.appspot.com/o/default.png?alt=media&token=427be978-e1e2-43c0-a275-bcf2477aa480',
       });
     const customToken = await fbAdmin.auth().createCustomToken(userRecord.uid);
     const app = fbClient.initializeApp({
-      apiKey: 'AIzaSyClWiJHlH9_EjnlG-l7281daXGitONbUo4',
-      authDomain: 'theorem-prototype.firebaseapp.com',
+      apiKey: functions.config().fbadmin.apikey,
+      authDomain: 'theorem-prototype.now.sh',
       projectId: 'theorem-prototype',
     });
     const userCredential = await app.auth().signInWithCustomToken(customToken);
     if (userCredential.user) {
       await userCredential.user.sendEmailVerification({
-        url: 'http://localhost:4000/',
+        url: 'https://theorem-prototype.now.sh/',
       });
       await app.auth().signOut();
       return { success: true };

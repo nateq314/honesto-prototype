@@ -25,7 +25,9 @@ export default function Register() {
       {registrationSubmitted ? (
         <div className="registrationSubmitted">
           <p>Registration Submitted.</p>
-          <Button>Go Home</Button>
+          <a href="/">
+            <Button>Log In</Button>
+          </a>
         </div>
       ) : (
         <Mutation mutation={REGISTER}>
