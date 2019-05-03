@@ -1,6 +1,6 @@
 # Theorem "Honesto" prototype exercise.
 
-Project specification can be found [here](https://www.google.com/), at the project root.
+Project specification can be found [here](https://github.com/nateq314/honesto-prototype/blob/master/Citrusbyte%20Frontend%20Prototyping%20Exercise.pdf), at the project root.
 
 As mentioned in the Slack channel, I went a bit overtime on this exercise. What’s there works really well, but the “My Feedback” screen (see spec) is entirely not implemented. It was the easiest, so I was saving it until last, but somehow even with the notified scope cuts I still ended up trying to implement too much. Other details noted below.
 
