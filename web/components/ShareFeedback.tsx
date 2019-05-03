@@ -5,12 +5,13 @@ import AppBar from './AppBar';
 import { FETCH_USERS } from '../other/queries';
 import { User } from '../pages/_app';
 import FeedbacksList from './FeedbacksList';
+import Footer from './Footer';
 
 const StyledShareFeedback = styled.div`
   height: 100vh;
   display: grid;
-  grid-template-rows: 80px auto;
-  grid-template-areas: 'appbar' 'app_content';
+  grid-template-rows: 80px auto 54px;
+  grid-template-areas: 'appbar' 'app_content' 'footer';
 
   .main-content {
     width: 800px;
@@ -57,6 +58,7 @@ export default function ShareFeedback({ feedbackComplete }: ShareFeedbackProps) 
                 </div>
                 <FeedbacksList users={users} />
               </div>
+              <Footer />
             </StyledShareFeedback>
           );
         }
