@@ -20,7 +20,7 @@ export default class MyDocument extends Document<DocumentProps> {
     return (
       <html>
         <Head>
-          <link rel="icon" href="/static/favicon.ico" key="favicon" />
+          <link rel="icon" href="/static/th64.png" key="favicon" />
           {this.props.styleTags}
         </Head>
         <body>
