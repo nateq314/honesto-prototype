@@ -54,7 +54,7 @@ function Login() {
                 // remove the API <-> CLIENT session token
                 const response = await logout();
                 // TODO: Remove the API <-> SSR session token
-                location.assign(`/`);
+                location.assign(`/?logout=true`);
               }}
             >
               Log Out
