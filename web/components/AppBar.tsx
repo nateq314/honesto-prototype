@@ -57,7 +57,9 @@ export default function AppBar({ active }: AppBarProps) {
         <a className={`navLink ${active === 'share' ? 'active' : ''}`} href="/">
           Share Feedback
         </a>
-        <a className={`navLink ${active === 'my_feedback' ? 'active' : ''}`}>My Feedback</a>
+        <a className={`navLink ${active === 'my_feedback' ? 'active' : ''}`} href="/my-feedback">
+          My Feedback
+        </a>
         <a className={`navLink ${active === 'team_feedback' ? 'active' : ''}`}>Team Feedback</a>
         <a className={`navLink ${active === 'teams' ? 'active' : ''}`}>Teams</a>
       </div>

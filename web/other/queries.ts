@@ -44,6 +44,7 @@ export const FETCH_USERS = gql`
             text
             order
             choices
+            type
           }
           multi
           numerical
@@ -62,6 +63,7 @@ export const FETCH_USERS = gql`
             text
             order
             choices
+            type
           }
           multi
           numerical
@@ -95,6 +97,7 @@ export const FETCH_CURRENT_USER = gql`
             text
             order
             choices
+            type
           }
           multi
           numerical
@@ -116,6 +119,7 @@ export const FETCH_CURRENT_USER = gql`
             text
             order
             choices
+            type
           }
           multi
           numerical

@@ -1,12 +1,9 @@
 import React, { useContext } from 'react';
 import Router from 'next/router';
-import styled from 'styled-components';
 import Login from '../components/Login';
 import ShareFeedback from '../components/ShareFeedback';
 import { UserContext } from './_app';
 import { NextContext } from 'next';
-
-const StyledHome = styled.div``;
 
 interface HomeProps {
   feedbackComplete?: boolean;
@@ -15,11 +12,7 @@ interface HomeProps {
 function Home({ feedbackComplete }: HomeProps) {
   const user = useContext(UserContext);
 
-  return (
-    <StyledHome>
-      {user ? <ShareFeedback feedbackComplete={feedbackComplete} /> : <Login />}
-    </StyledHome>
-  );
+  return user ? <ShareFeedback feedbackComplete={feedbackComplete} /> : <Login />;
 }
 
 Home.getInitialProps = async ({ req, res, query }: NextContext) => {

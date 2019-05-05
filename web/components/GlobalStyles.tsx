@@ -11,6 +11,10 @@ const GlobalStyles = createGlobalStyle`
     margin: 0;
   }
 
+  * {
+    color: #031323;
+  }
+
   h1 {
     margin-top: 0px;
   }

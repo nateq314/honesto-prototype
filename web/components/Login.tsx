@@ -37,6 +37,7 @@ export const LOGIN = `
               text
               order
               choices
+              type
             }
             multi
             numerical
@@ -58,6 +59,7 @@ export const LOGIN = `
               text
               order
               choices
+              type
             }
             multi
             numerical
