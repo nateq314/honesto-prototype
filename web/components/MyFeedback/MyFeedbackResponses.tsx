@@ -21,6 +21,7 @@ const StyledMyFeedbackResponses = styled.ul`
   padding: 0px;
   text-align: left;
   width: 100%;
+  border-left: 1px solid #ddd;
 
   li.response-list-header {
     font-size: 22px;

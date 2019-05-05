@@ -8,6 +8,7 @@ import MyFeedbackList from './MyFeedbackList';
 interface MyFeedbackContentProps {
   feedbacks: Feedback[];
   selectedView: boolean;
+  questionCount: number;
 }
 
 export interface RelevantFeedback {
@@ -41,21 +42,27 @@ const StyledNoContentToDisplay = styled.div`
   }
 `;
 
-export default function MyFeedbackContent({ feedbacks, selectedView }: MyFeedbackContentProps) {
+export default function MyFeedbackContent({
+  feedbacks,
+  selectedView,
+  questionCount,
+}: MyFeedbackContentProps) {
   const fb: RelevantFeedback[] = useMemo(
     () =>
-      feedbacks.map((f) => {
-        if (selectedView === GIVEN)
-          return {
-            user: f.for_user,
-            responses: f.responses,
-          };
-        else
-          return {
-            user: f.given_by,
-            responses: f.responses,
-          };
-      }),
+      feedbacks
+        .filter((f) => f.responses.length > 0 && f.responses.length === questionCount)
+        .map((f) => {
+          if (selectedView === GIVEN)
+            return {
+              user: f.for_user,
+              responses: f.responses,
+            };
+          else
+            return {
+              user: f.given_by,
+              responses: f.responses,
+            };
+        }),
     [feedbacks],
   );
 

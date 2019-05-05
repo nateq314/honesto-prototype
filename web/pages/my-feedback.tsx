@@ -1,10 +1,13 @@
 import Router from 'next/router';
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { UserContext, User } from './_app';
+import { UserContext, User, Question } from './_app';
 import AppBar from '../components/AppBar';
 import Footer from '../components/Footer';
 import MyFeedback from '../components/MyFeedback';
+import { Query, QueryResult } from 'react-apollo';
+import { FETCH_QUESTIONS } from '../other/queries';
+import { FetchQuestionsQueryResult } from '../components/CompleteFeedback';
 
 interface FetchUserQueryResult {
   user: User;
@@ -21,14 +24,25 @@ function MyFeedbackPage() {
   const user = useContext(UserContext) as User;
   if (typeof window !== 'undefined' && !user) Router.push('/');
   return (
-    <StyledMyFeedbackPage>
-      <AppBar active={'my_feedback'} />
-      <MyFeedback
-        feedbacksGiven={user.feedbacks_given}
-        feedbacksReceived={user.feedbacks_received}
-      />
-      <Footer />
-    </StyledMyFeedbackPage>
+    <Query query={FETCH_QUESTIONS}>
+      {({ error, loading, data }: QueryResult<FetchQuestionsQueryResult>) => {
+        if (loading) return 'Loading...';
+        if (error) return `Error! ${error.message}`;
+        if (data) {
+          return (
+            <StyledMyFeedbackPage>
+              <AppBar active={'my_feedback'} />
+              <MyFeedback
+                questions={data.questions}
+                feedbacksGiven={user.feedbacks_given}
+                feedbacksReceived={user.feedbacks_received}
+              />
+              <Footer />
+            </StyledMyFeedbackPage>
+          );
+        }
+      }}
+    </Query>
   );
 }
 

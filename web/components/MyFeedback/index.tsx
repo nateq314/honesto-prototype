@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Feedback } from '../../pages/_app';
+import { Feedback, Question } from '../../pages/_app';
 import MyFeedbackContent from './MyFeedbackContent';
 
 interface MyFeedbackProps {
   feedbacksGiven: Feedback[];
   feedbacksReceived: Feedback[];
+  questions: Question[];
 }
 
 const StyledMyFeedback = styled.section`
@@ -43,7 +44,11 @@ const StyledMyFeedback = styled.section`
 export const GIVEN = true;
 export const RECEIVED = false;
 
-export default function MyFeedback({ feedbacksGiven, feedbacksReceived }: MyFeedbackProps) {
+export default function MyFeedback({
+  feedbacksGiven,
+  feedbacksReceived,
+  questions,
+}: MyFeedbackProps) {
   const [selectedView, setSelectedView] = useState(GIVEN);
   const feedbacks = selectedView === RECEIVED ? feedbacksReceived : feedbacksGiven;
 
@@ -53,7 +58,11 @@ export default function MyFeedback({ feedbacksGiven, feedbacksReceived }: MyFeed
         selectedView={selectedView}
         toggleView={() => setSelectedView(!selectedView)}
       />
-      <MyFeedbackContent feedbacks={feedbacks} selectedView={selectedView} />
+      <MyFeedbackContent
+        questionCount={questions.length}
+        feedbacks={feedbacks}
+        selectedView={selectedView}
+      />
     </StyledMyFeedback>
   );
 }

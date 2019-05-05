@@ -16,7 +16,6 @@ const StyledMyFeedbackList = styled.ul`
   padding: 0px 0px 0px 0px;
   width: 380px;
   text-align: left;
-  border-right: 1px solid #ddd;
   height: 100%;
 
   li {
