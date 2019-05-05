@@ -15,7 +15,7 @@ const StyledShareFeedback = styled.div`
 
   .main-content {
     width: 800px;
-    margin: 0px auto;
+    margin: 0px auto 50px auto;
   }
 
   .heading {
