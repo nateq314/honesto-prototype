@@ -29,6 +29,7 @@ const StyledNoContentToDisplay = styled.div`
   padding: 50px;
   text-align: left;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  height: 300px;
 
   h1 {
     font-size: 31px;
