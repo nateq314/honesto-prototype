@@ -86,7 +86,7 @@ export default function MyFeedbackContent({
         selectedView={selectedView}
         feedbackOnClick={feedbackOnClick}
       />
-      <MyFeedbackResponses fb={fb[selectedFbIdx]} />
+      <MyFeedbackResponses fb={fb[selectedFbIdx]} selectedView={selectedView} />
     </StyledMyFeedbackContent>
   ) : (
     <StyledNoContentToDisplay>

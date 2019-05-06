@@ -30,7 +30,7 @@ const StyledMyFeedbackList = styled.ul`
       letter-spacing: 0.15em;
       color: #59636e;
       font-weight: bold;
-      padding: 15px;
+      padding: 17px 0px 13px 15px;
     }
   }
 

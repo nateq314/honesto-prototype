@@ -7,6 +7,7 @@ import { REGISTER } from '../other/mutations';
 
 const StyledRegister = styled.div`
   padding-top: 30px;
+  background-image: url('/background.svg');
 
   h1 {
     letter-spacing: 1px;

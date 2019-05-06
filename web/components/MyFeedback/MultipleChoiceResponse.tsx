@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ResponseProps } from './MyFeedbackResponses';
 
@@ -29,13 +29,60 @@ const StyledMultipleChoiceResponse = styled.ul`
       background-color: #2bbf6a;
     }
   }
+
+  .tooltip {
+    width: 200px;
+    position: absolute;
+    color: #fff;
+    visibility: hidden;
+    padding: 8px;
+    border-radius: 16px;
+    border-top-left-radius: 0px;
+    font-size: 12px;
+    padding: 10px 15px;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-top-left-radius: 0;
+
+    &.visible {
+      visibility: visible;
+    }
+  }
 `;
 
 const RATINGS = ['low', 'med', 'high'];
 
-export default function MultipleChoiceResponse({ resp }: ResponseProps) {
+export default function MultipleChoiceResponse({ resp, skipped }: ResponseProps) {
+  const [showTooltip, setShowTooltip] = useState(false);
+  const [mouseXY, setMouseXY] = useState({
+    x: -1,
+    y: -1,
+  });
+
+  function onMouseOver(e: React.MouseEvent<HTMLUListElement>) {
+    setShowTooltip(true);
+    setMouseXY({
+      x: e.pageX + 10,
+      y: e.pageY + 10,
+    });
+  }
+
+  function onMouseOut() {
+    setShowTooltip(false);
+  }
+
+  function onMouseMove(e: React.MouseEvent<HTMLUListElement>) {
+    setMouseXY({
+      x: e.pageX + 10,
+      y: e.pageY + 10,
+    });
+  }
+
   return (
-    <StyledMultipleChoiceResponse>
+    <StyledMultipleChoiceResponse
+      onMouseOver={!skipped ? onMouseOver : undefined}
+      onMouseOut={!skipped ? onMouseOut : undefined}
+      onMouseMove={!skipped ? onMouseMove : undefined}
+    >
       {Array(3)
         .fill('')
         .map((_, idx) => {
@@ -46,6 +93,15 @@ export default function MultipleChoiceResponse({ resp }: ResponseProps) {
             />
           );
         })}
+      <div
+        className={`tooltip ${showTooltip ? 'visible' : ''}`}
+        style={{
+          top: mouseXY.y + 'px',
+          left: mouseXY.x + 'px',
+        }}
+      >
+        {(resp.question.choices as string[])[resp.multi as number]}
+      </div>
     </StyledMultipleChoiceResponse>
   );
 }

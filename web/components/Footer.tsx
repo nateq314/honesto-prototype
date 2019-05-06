@@ -26,10 +26,12 @@ const StyledFooter = styled.footer`
 
   .copyright {
     font-size: 12px;
+    color: #fff;
   }
 
   .company-name {
     font-weight: bold;
+    color: #fff;
   }
 `;
 

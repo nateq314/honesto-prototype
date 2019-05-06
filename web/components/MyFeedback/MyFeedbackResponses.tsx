@@ -6,13 +6,16 @@ import { MULTI, NUMERICAL, TEXT } from '../QuestionResponseInputter';
 import MultipleChoiceResponse from './MultipleChoiceResponse';
 import NumericalResponse from './NumericalResponse';
 import TextResponse from './TextResponse';
+import { GIVEN, RECEIVED } from '.';
 
 interface MyFeedbackResponsesProps {
   fb: RelevantFeedback;
+  selectedView: boolean;
 }
 
 export interface ResponseProps {
   resp: QuestionAndResponse;
+  skipped?: boolean;
 }
 
 const StyledMyFeedbackResponses = styled.ul`
@@ -62,11 +65,12 @@ const StyledMyFeedbackResponses = styled.ul`
   }
 `;
 
-export default ({ fb }: MyFeedbackResponsesProps) => {
+export default ({ fb, selectedView }: MyFeedbackResponsesProps) => {
   return (
     <StyledMyFeedbackResponses>
       <li className="response-list-header">
-        {fb.user.first_name} {fb.user.last_name}'s Feedback
+        {selectedView === GIVEN && `My Feedback for ${fb.user.first_name} ${fb.user.last_name}`}
+        {selectedView === RECEIVED && `${fb.user.first_name} ${fb.user.last_name}'s Feedback`}
       </li>
       {fb.responses.map((resp) => {
         const skipped =
@@ -83,7 +87,9 @@ export default ({ fb }: MyFeedbackResponsesProps) => {
                 </div>
               )}
             </div>
-            {resp.question.type === MULTI && <MultipleChoiceResponse resp={resp} />}
+            {resp.question.type === MULTI && (
+              <MultipleChoiceResponse resp={resp} skipped={skipped} />
+            )}
             {resp.question.type === NUMERICAL && <NumericalResponse resp={resp} />}
             {resp.question.type === TEXT && <TextResponse resp={resp} />}
           </li>
